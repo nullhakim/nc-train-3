@@ -1,5 +1,17 @@
 {
   "devDependencies": {
-    "supabase": "^2.72.9"
-  }
+    "@types/node": "^25.1.0",
+    "supabase": "^2.72.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.93.3",
+    "dotenv": "^17.2.3"
+  },
+  "scripts": {
+  "seed:storage": "tsx seed-storage.ts",
+  "full-reset": "supabase db reset && npm run seed:storage",
+  "full-reset:remote": "supabase db reset --linked && npm run seed:storage"
+}
 }
