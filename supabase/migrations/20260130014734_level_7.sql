@@ -124,6 +124,32 @@ CREATE POLICY "Allow owner to manage Alfa" ON public.alfa FOR ALL TO authenticat
 );
 
 -- ==========================================
+-- CREATE VIEW DENGAN SECURITY INVOKER
+-- ==========================================
+
+CREATE OR REPLACE VIEW public.v_alfa_bravo_combined
+WITH (security_invoker = true) -- KUNCI UTAMA: View akan mematuhi RLS tabel asal
+    AS
+SELECT
+    a.id AS alfa_id,
+    a.alfa_1,
+    a.alfa_2,
+    a.image_url,
+    b.id AS bravo_id,
+    b.bravo_1,
+    b.bravo_2,
+    b.user_id AS owner_id
+FROM public.alfa a
+    JOIN public.bravo b ON a.bravo_id = b.id;
+
+-- Berikan akses agar role standard bisa melihat view ini
+GRANT
+SELECT
+    ON public.v_alfa_bravo_combined TO anon,
+    authenticated,
+    service_role;
+
+-- ==========================================
 -- 6. STORAGE POLICIES: Keamanan File
 -- ==========================================
 
