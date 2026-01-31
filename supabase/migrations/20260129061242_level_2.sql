@@ -27,3 +27,8 @@ CREATE TABLE public.alfa (
     bravo_id uuid,
     CONSTRAINT fk_bravo FOREIGN KEY (bravo_id) REFERENCES public.bravo (id) ON DELETE SET NULL
 );
+
+CREATE VIEW public.alfa_bravo_view AS
+SELECT a.id AS alfa_id, a.alfa_1, a.alfa_2, b.id AS bravo_id, b.bravo_1, b.bravo_2
+FROM public.alfa a
+    LEFT JOIN public.bravo b ON a.bravo_id = b.id;
